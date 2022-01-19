@@ -41,10 +41,15 @@ function findLongestSubstringSol(str) {
       // i index에 해당하는 char가 seen에 있으면
       start = Math.max(start, seen[char]); // start 값 갱신 즉, substring 시작을 다시하는 것
     }
-    longest = Math.max(longest, i - start); // 매 index마다 즉, 매 substring 길이마다 기존 longest와 비교
-    seen[char] = i; // 해당 char의 value로 index 저장
+    // console.log("start " + start + " i " + i);
+    longest = Math.max(longest, i - start + 1); // 매 index마다 즉, 매 substring 길이마다 기존 longest와 비교
+    // console.log(longest);
+    seen[char] = i + 1; // 해당 char의 다음 index 저장. index 간 차이값으로 longest를 해줄 때는 문제가 되지 않지만 char가 1개일때도 1 - 0으로 1이 저장된다.
+    // console.log(seen);
   }
   return longest;
 }
 
 console.log(findLongestSubstringSol("thisisawsome"));
+console.log(findLongestSubstringSol("thisishowwedoit"));
+console.log(findLongestSubstringSol("rithmschool"));
