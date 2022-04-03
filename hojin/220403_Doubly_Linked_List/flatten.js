@@ -14,22 +14,27 @@
  */
 const flatten = (head) => {
   let curNode = head;
-  if (!curNode) return head;
   while (curNode) {
     if (curNode.child) {
       const nextNode = curNode.next;
       let childHead = flatten(curNode.child);
       let childTail = childHead;
-      for (childTail; !!childTail.next; childTail = childTail.next) {}
-      curNode.next = childHead;
-      childHead.prev = curNode;
-      childTail.next = nextNode;
-      if (nextNode) {
-        nextNode.prev = childTail;
+      while (childTail.next) {
+        childTail = childTail.next;
       }
+      connect(curNode, childHead);
+      connect(childTail, nextNode);
       curNode.child = null;
     }
     curNode = curNode.next;
   }
   return head;
 };
+function connect(prev, next) {
+  if (prev) {
+    prev.next = next;
+  }
+  if (next) {
+    next.prev = prev;
+  }
+}
